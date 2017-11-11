@@ -147,13 +147,23 @@ void Mrf24j40::clear_coordinator(void) {
 }
 
 void Mrf24j40::set_pan(uint16_t pan) {
-  write_short_ctrl_reg(PANIDL, pan >> 8);
-  write_short_ctrl_reg(PANIDH, pan & 0xFF);
+  write_short_ctrl_reg(PANIDL, pan & 0xFF);
+  write_short_ctrl_reg(PANIDH, pan >> 8);
+}
+
+uint16_t Mrf24j40::pan(void) {
+  return read_short_ctrl_reg(PANIDL) |
+        (read_short_ctrl_reg(PANIDH) << 8);
 }
 
 void Mrf24j40::set_short_addr(uint16_t addr) {
-  write_short_ctrl_reg(SADRL, addr >> 8);
-  write_short_ctrl_reg(SADRH, addr & 0xFF);
+  write_short_ctrl_reg(SADRL, addr & 0xFF);
+  write_short_ctrl_reg(SADRH, addr >> 8);
+}
+
+uint16_t Mrf24j40::short_addr(void) {
+  return read_short_ctrl_reg(SADRL) |
+        (read_short_ctrl_reg(SADRH) << 8);
 }
 
 void Mrf24j40::set_eui(uint8_t *eui) {
@@ -168,8 +178,8 @@ void Mrf24j40::set_eui(uint8_t *eui) {
 }
 
 void Mrf24j40::set_coordinator_short_addr(uint16_t addr) {
-  write_long_ctrl_reg(ASSOSADR0, addr >> 8);
-  write_long_ctrl_reg(ASSOSADR1, addr & 0xFF);
+  write_long_ctrl_reg(ASSOSADR0, addr & 0xFF);
+  write_long_ctrl_reg(ASSOSADR1, addr >> 8);
 }
 
 void Mrf24j40::set_coordinator_eui(uint8_t *eui) {
@@ -202,7 +212,9 @@ void Mrf24j40::hard_reset(void) {
 }
 
 void Mrf24j40::soft_reset(void) {
-  write_short_ctrl_reg(SOFTRST, (RSTPWR | RSTBB | RSTMAC));
+  uint8_t m = RSTPWR | RSTBB | RSTMAC;
+  write_short_ctrl_reg(SOFTRST, m);
+  while ((read_short_ctrl_reg(SOFTRST) & m) != 0) {}
   delayMicroseconds(192);
 }
 

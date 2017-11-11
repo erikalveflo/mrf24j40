@@ -356,10 +356,12 @@ public:
   void sleep();
   void wakeup();
   void set_short_addr(uint16_t addr);
+  uint16_t short_addr(void);
   void set_coordinator_short_addr(uint16_t addr);
   void set_coordinator_eui(uint8_t *eui);
   void set_eui(uint8_t *eui);
   void set_pan(uint16_t pan);
+  uint16_t pan(void);
   void set_key(uint16_t addr, uint8_t *key);
   void tx_key(uint8_t *key) { set_key(SECKTXNFIFO, key); }
   void rx_key(uint8_t *key) { set_key(SECKRXFIFO, key); }
