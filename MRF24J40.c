@@ -1,24 +1,23 @@
 /*
- * Copyright (C) 2014, Michele Balistreri
+ * Copyright (c) 2014 Michele Balistreri
+ * Copyright (c) 2011 Alex Hornung
  *
- * Derived from code originally Copyright (C) 2011, Alex Hornung
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
- * Software is furnished to do so, subject to the following conditions: 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * The above copyright notice and this permission notice shall be included in 
- * all copies or substantial portions of the Software. 
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
@@ -185,9 +184,9 @@ void mrf24j40_hard_reset() {
 void mrf24j40_initialize() {
   mrf24j40_cs_pin(1);
   mrf24j40_wake_pin(1);
-  
+
   mrf24j40_hard_reset();
-  
+
   mrf24j40_write_short_ctrl_reg(SOFTRST, (RSTPWR | RSTBB | RSTMAC));
 
   mrf24j40_delay_us(192);
@@ -208,7 +207,7 @@ void mrf24j40_initialize() {
   mrf24j40_write_short_ctrl_reg(BBREG6, RSSIMODE2);
 
   mrf24j40_rxfifo_flush();
-  
+
   mrf24j40_ie();
 }
 
@@ -249,7 +248,7 @@ void mrf24j40_txpkt(uint8_t *frame, int16_t hdr_len, int16_t sec_hdr_len, int16_
   while (frame_len-- > 0) {
     mrf24j40_spi_write(*frame++);
   }
-  
+
   mrf24j40_spi_postamble();
 
   mrf24j40_write_short_ctrl_reg(TXNCON, w | TXNTRIG);
@@ -312,7 +311,7 @@ int16_t mrf24j40_rxpkt_intcb(uint8_t *buf, uint8_t *plqi, uint8_t *prssi) {
 
   mrf24j40_rxfifo_flush();
   mrf24j40_write_short_ctrl_reg(BBREG1, mrf24j40_read_short_ctrl_reg(BBREG1) & ~RXDECINV);
-  
+
   return flen;
 }
 
