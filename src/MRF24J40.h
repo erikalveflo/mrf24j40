@@ -355,12 +355,12 @@ public:
   void begin(void);
   void sleep();
   void wakeup();
-  void set_short_addr(uint8_t *addr);
-  void set_coordinator_short_addr(uint8_t *addr);
+  void set_short_addr(uint16_t addr);
+  void set_coordinator_short_addr(uint16_t addr);
   void set_coordinator_eui(uint8_t *eui);
   void set_eui(uint8_t *eui);
-  void set_pan(uint8_t *pan);
-  void set_key(uint16_t address, uint8_t *key);
+  void set_pan(uint16_t pan);
+  void set_key(uint16_t addr, uint8_t *key);
   void tx_key(uint8_t *key) { set_key(SECKTXNFIFO, key); }
   void rx_key(uint8_t *key) { set_key(SECKRXFIFO, key); }
   void set_channel(int16_t ch);
