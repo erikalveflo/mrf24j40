@@ -168,19 +168,19 @@ void Mrf24j40::set_eui(uint8_t *eui) {
 }
 
 void Mrf24j40::set_coordinator_short_addr(uint8_t *addr) {
-  write_short_ctrl_reg(ASSOSADR0, addr[0]);
-  write_short_ctrl_reg(ASSOSADR1, addr[1]);
+  write_long_ctrl_reg(ASSOSADR0, addr[0]);
+  write_long_ctrl_reg(ASSOSADR1, addr[1]);
 }
 
 void Mrf24j40::set_coordinator_eui(uint8_t *eui) {
-  write_short_ctrl_reg(ASSOEADR0, eui[0]);
-  write_short_ctrl_reg(ASSOEADR1, eui[1]);
-  write_short_ctrl_reg(ASSOEADR2, eui[2]);
-  write_short_ctrl_reg(ASSOEADR3, eui[3]);
-  write_short_ctrl_reg(ASSOEADR4, eui[4]);
-  write_short_ctrl_reg(ASSOEADR5, eui[5]);
-  write_short_ctrl_reg(ASSOEADR6, eui[6]);
-  write_short_ctrl_reg(ASSOEADR7, eui[7]);
+  write_long_ctrl_reg(ASSOEADR0, eui[0]);
+  write_long_ctrl_reg(ASSOEADR1, eui[1]);
+  write_long_ctrl_reg(ASSOEADR2, eui[2]);
+  write_long_ctrl_reg(ASSOEADR3, eui[3]);
+  write_long_ctrl_reg(ASSOEADR4, eui[4]);
+  write_long_ctrl_reg(ASSOEADR5, eui[5]);
+  write_long_ctrl_reg(ASSOEADR6, eui[6]);
+  write_long_ctrl_reg(ASSOEADR7, eui[7]);
 }
 
 void Mrf24j40::set_key(uint16_t address, uint8_t *key) {
