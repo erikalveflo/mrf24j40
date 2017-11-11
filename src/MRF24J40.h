@@ -352,7 +352,7 @@ public:
   uint8_t get_pending_frame(void);
   void hard_reset(void);
   void soft_reset(void);
-  void initialize(void);
+  void begin(void);
   void sleep();
   void wakeup();
   void set_short_addr(uint8_t *addr);

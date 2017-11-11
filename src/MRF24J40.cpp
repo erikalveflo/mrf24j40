@@ -220,7 +220,7 @@ void Mrf24j40::_configure_pins(void) {
   _set_wake_pin(1);
 }
 
-void Mrf24j40::initialize(void) {
+void Mrf24j40::begin(void) {
   _configure_pins();
 
   SPI.setBitOrder(MSBFIRST);
