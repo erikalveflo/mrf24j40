@@ -212,9 +212,9 @@ void Mrf24j40::hard_reset(void) {
 }
 
 void Mrf24j40::soft_reset(void) {
-  uint8_t m = RSTPWR | RSTBB | RSTMAC;
-  write_short_ctrl_reg(SOFTRST, m);
-  while ((read_short_ctrl_reg(SOFTRST) & m) != 0) {}
+  uint8_t w = RSTPWR | RSTBB | RSTMAC;
+  write_short_ctrl_reg(SOFTRST, w);
+  while ((read_short_ctrl_reg(SOFTRST) & w) != 0) {}
   delayMicroseconds(192);
 }
 
@@ -347,16 +347,19 @@ void Mrf24j40::_rx_enable(void)
   write_short_ctrl_reg(BBREG1, read_short_ctrl_reg(BBREG1) & ~RXDECINV);
 }
 
-int16_t Mrf24j40::rxpkt_intcb(uint8_t *buf, uint8_t *plqi, uint8_t *prssi) {
+int16_t Mrf24j40::rxpkt_intcb(uint8_t *buf, int16_t buf_len, uint8_t *plqi, uint8_t *prssi) {
   _rx_disable();
 
   spi_preamble();
   _write_long_addr(RXFIFO, 0);
 
-  uint16_t flen = spi_read();
+  int16_t flen = spi_read();
 
-  for (uint16_t i = 0; i < flen; i++) {
-    *buf++ = spi_read();
+  for (int16_t i = 0; i < flen; i++) {
+    uint8_t c = spi_read();
+    if (i < buf_len) {
+      buf[i] = c;
+    }
   }
 
   uint8_t lqi = spi_read();

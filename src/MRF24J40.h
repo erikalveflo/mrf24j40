@@ -374,7 +374,7 @@ public:
   bool rx_sec_fail();
   uint8_t get_channel(void);
   int16_t int_tasks(void);
-  int16_t rxpkt_intcb(uint8_t *buf, uint8_t *plqi, uint8_t *prssi);
+  int16_t rxpkt_intcb(uint8_t *buf, int16_t buf_len, uint8_t *plqi, uint8_t *prssi);
   int16_t txpkt_intcb(void);
   void sec_intcb(bool accept);
 
