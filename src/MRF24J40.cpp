@@ -337,8 +337,18 @@ int16_t Mrf24j40::txpkt_intcb(void) {
   }
 }
 
-int16_t Mrf24j40::rxpkt_intcb(uint8_t *buf, uint8_t *plqi, uint8_t *prssi) {
+void Mrf24j40::_rx_disable(void)
+{
   write_short_ctrl_reg(BBREG1, read_short_ctrl_reg(BBREG1) | RXDECINV);
+}
+
+void Mrf24j40::_rx_enable(void)
+{
+  write_short_ctrl_reg(BBREG1, read_short_ctrl_reg(BBREG1) & ~RXDECINV);
+}
+
+int16_t Mrf24j40::rxpkt_intcb(uint8_t *buf, uint8_t *plqi, uint8_t *prssi) {
+  _rx_disable();
 
   spi_preamble();
   _write_long_addr(RXFIFO, 0);
@@ -363,7 +373,7 @@ int16_t Mrf24j40::rxpkt_intcb(uint8_t *buf, uint8_t *plqi, uint8_t *prssi) {
   spi_postamble();
 
   rxfifo_flush();
-  write_short_ctrl_reg(BBREG1, read_short_ctrl_reg(BBREG1) & ~RXDECINV);
+  _rx_enable();
 
   return flen;
 }

@@ -392,6 +392,9 @@ private:
   void _write_long_addr(uint16_t addr, uint8_t write);
   void _write_short_addr(uint8_t addr, uint8_t write);
 
+  void _rx_disable(void);
+  void _rx_enable(void);
+
   void ie(void);
   void pwr_reset(void);
   void bb_reset(void);
